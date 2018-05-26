@@ -79,21 +79,21 @@
 
 
 
-<meta name="description" content="1.项目背景应实验室导师的需求，我和几位同学需要从零开发一个Android+Java Web的C/S系统。 2.图片存储何处，如何请求我们最初设计数据库时，当碰到图片，为了加快进度，就暂时把图片当做一个BLOB的类型。 不过，当我们完全设计好符合功能需求的数据库后，又不得不重新思考起来，图片的存储与获取问题。 2.1 数据库几乎所有的数据可以都存放在数据库中，所以，即是对于像图片这样的大文件，数据">
+<meta name="description" content="1.项目背景应实验室导师的需求，我和几位同学需要从零开发一个Android+Java Web的C/S系统。 2.图片存储何处，如何请求我们最初设计数据库时，当碰到图片，为了加快进度，就暂时把图片当做一个BLOB的类型。 不过，当我们完全设计好符合功能需求的数据库后，又不得不重新思考起来，图片的存储与获取问题。">
 <meta name="keywords" content="Java web,图片">
 <meta property="og:type" content="article">
 <meta property="og:title" content="web开发之图片存储">
 <meta property="og:url" content="http://yoursite.com/2018/03/31/web开发之图片存储/index.html">
 <meta property="og:site_name" content="Hexoo">
-<meta property="og:description" content="1.项目背景应实验室导师的需求，我和几位同学需要从零开发一个Android+Java Web的C/S系统。 2.图片存储何处，如何请求我们最初设计数据库时，当碰到图片，为了加快进度，就暂时把图片当做一个BLOB的类型。 不过，当我们完全设计好符合功能需求的数据库后，又不得不重新思考起来，图片的存储与获取问题。 2.1 数据库几乎所有的数据可以都存放在数据库中，所以，即是对于像图片这样的大文件，数据">
+<meta property="og:description" content="1.项目背景应实验室导师的需求，我和几位同学需要从零开发一个Android+Java Web的C/S系统。 2.图片存储何处，如何请求我们最初设计数据库时，当碰到图片，为了加快进度，就暂时把图片当做一个BLOB的类型。 不过，当我们完全设计好符合功能需求的数据库后，又不得不重新思考起来，图片的存储与获取问题。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/03/31/web开发之图片存储/1522672614773.png">
 <meta property="og:image" content="http://yoursite.com/2018/03/31/web开发之图片存储/1522672667043.png">
 <meta property="og:image" content="http://yoursite.com/2018/03/31/web开发之图片存储/1522672700003.png">
-<meta property="og:updated_time" content="2018-04-16T12:47:54.916Z">
+<meta property="og:updated_time" content="2018-05-26T12:38:08.340Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="web开发之图片存储">
-<meta name="twitter:description" content="1.项目背景应实验室导师的需求，我和几位同学需要从零开发一个Android+Java Web的C/S系统。 2.图片存储何处，如何请求我们最初设计数据库时，当碰到图片，为了加快进度，就暂时把图片当做一个BLOB的类型。 不过，当我们完全设计好符合功能需求的数据库后，又不得不重新思考起来，图片的存储与获取问题。 2.1 数据库几乎所有的数据可以都存放在数据库中，所以，即是对于像图片这样的大文件，数据">
+<meta name="twitter:description" content="1.项目背景应实验室导师的需求，我和几位同学需要从零开发一个Android+Java Web的C/S系统。 2.图片存储何处，如何请求我们最初设计数据库时，当碰到图片，为了加快进度，就暂时把图片当做一个BLOB的类型。 不过，当我们完全设计好符合功能需求的数据库后，又不得不重新思考起来，图片的存储与获取问题。">
 <meta name="twitter:image" content="http://yoursite.com/2018/03/31/web开发之图片存储/1522672614773.png">
 
 
@@ -307,6 +307,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-web/" itemprop="url" rel="index">
+                    <span itemprop="name">Java web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -317,6 +339,37 @@
 
           
 
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  767
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
           
 
           
@@ -336,7 +389,7 @@
       
         <h2 id="1-项目背景"><a href="#1-项目背景" class="headerlink" title="1.项目背景"></a>1.项目背景</h2><p>应实验室导师的需求，我和几位同学需要从零开发一个Android+Java Web的<strong>C/S</strong>系统。</p>
 <h2 id="2-图片存储何处，如何请求"><a href="#2-图片存储何处，如何请求" class="headerlink" title="2.图片存储何处，如何请求"></a>2.图片存储何处，如何请求</h2><p>我们最初设计数据库时，当碰到图片，为了加快进度，就暂时把图片当做一个<strong>BLOB</strong>的类型。</p>
-<p>不过，当我们完全设计好符合功能需求的数据库后，又不得不重新思考起来，图片的存储与获取问题。</p>
+<p>不过，当我们完全设计好符合功能需求的数据库后，又不得不重新思考起来，图片的存储与获取问题。<a id="more"></a></p>
 <h3 id="2-1-数据库"><a href="#2-1-数据库" class="headerlink" title="2.1 数据库"></a>2.1 数据库</h3><p>几乎所有的数据可以都存放在数据库中，所以，即是对于像图片这样的大文件，数据库也是可以容纳的。</p>
 <p>以MySQL为例，我们可以使用<strong>BLOB</strong>类型来存储图片。</p>
 <p>假定我们有一张新闻表用来存储新闻，新闻有新闻id、标题title、图片pic、文本text以及日期date，如下表所示：</p>
@@ -522,10 +575,6 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/28/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
@@ -562,6 +611,11 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjg0NC8xMzM4MA=="></div>
+    </div>
 
   
 
@@ -615,12 +669,21 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
             
 
             
@@ -681,13 +744,29 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Melvin Maonn</span>
 
   
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">4.8k</span>
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_pv">
+  本站访客数:<span id="busuanzi_value_site_pv"></span>
+</span>
 </div>
 
 
@@ -750,6 +829,9 @@
 
 
 
+  
+  
+
 
 
 
@@ -784,6 +866,16 @@
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
   
 
 
@@ -839,6 +931,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 

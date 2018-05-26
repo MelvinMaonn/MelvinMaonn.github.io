@@ -79,21 +79,21 @@
 
 
 
-<meta name="description" content="前言本人在做实验的过程中，对于一个有千万级数据量的表，需要对其有查询操作，而其中一个查询列是只有0、1的二值列，传统的检验都建议这种值单一的列不要建索引，但是经过实际测试，在该列建立索引后，查询速度要提升5倍以上，原来处理一个表需要接近7个小时，而建立索引之后只需要1个小时左右，因此，希望通过这边文章，探究数据库索引的内在机制。 为什么需要索引现代数据库中，数据存储的基本单位是元组，而元组的更高一">
+<meta name="description" content="前言本人在做实验的过程中，对于一个有千万级数据量的表，需要对其有查询操作，而其中一个查询列是只有0、1的二值列，传统的检验都建议这种值单一的列不要建索引，但是经过实际测试，在该列建立索引后，查询速度要提升5倍以上，原来处理一个表需要接近7个小时，而建立索引之后只需要1个小时左右，因此，希望通过这边文章，探究数据库索引的内在机制。">
 <meta name="keywords" content="数据库,索引">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库索引">
 <meta property="og:url" content="http://yoursite.com/2018/04/16/数据库索引/index.html">
 <meta property="og:site_name" content="Hexoo">
-<meta property="og:description" content="前言本人在做实验的过程中，对于一个有千万级数据量的表，需要对其有查询操作，而其中一个查询列是只有0、1的二值列，传统的检验都建议这种值单一的列不要建索引，但是经过实际测试，在该列建立索引后，查询速度要提升5倍以上，原来处理一个表需要接近7个小时，而建立索引之后只需要1个小时左右，因此，希望通过这边文章，探究数据库索引的内在机制。 为什么需要索引现代数据库中，数据存储的基本单位是元组，而元组的更高一">
+<meta property="og:description" content="前言本人在做实验的过程中，对于一个有千万级数据量的表，需要对其有查询操作，而其中一个查询列是只有0、1的二值列，传统的检验都建议这种值单一的列不要建索引，但是经过实际测试，在该列建立索引后，查询速度要提升5倍以上，原来处理一个表需要接近7个小时，而建立索引之后只需要1个小时左右，因此，希望通过这边文章，探究数据库索引的内在机制。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/04/16/数据库索引/table.png">
 <meta property="og:image" content="http://yoursite.com/2018/04/16/数据库索引/binary_search_tree.png">
 <meta property="og:image" content="http://yoursite.com/2018/04/16/数据库索引/B+_tree.png">
-<meta property="og:updated_time" content="2018-04-25T15:38:34.055Z">
+<meta property="og:updated_time" content="2018-05-26T12:38:15.694Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库索引">
-<meta name="twitter:description" content="前言本人在做实验的过程中，对于一个有千万级数据量的表，需要对其有查询操作，而其中一个查询列是只有0、1的二值列，传统的检验都建议这种值单一的列不要建索引，但是经过实际测试，在该列建立索引后，查询速度要提升5倍以上，原来处理一个表需要接近7个小时，而建立索引之后只需要1个小时左右，因此，希望通过这边文章，探究数据库索引的内在机制。 为什么需要索引现代数据库中，数据存储的基本单位是元组，而元组的更高一">
+<meta name="twitter:description" content="前言本人在做实验的过程中，对于一个有千万级数据量的表，需要对其有查询操作，而其中一个查询列是只有0、1的二值列，传统的检验都建议这种值单一的列不要建索引，但是经过实际测试，在该列建立索引后，查询速度要提升5倍以上，原来处理一个表需要接近7个小时，而建立索引之后只需要1个小时左右，因此，希望通过这边文章，探究数据库索引的内在机制。">
 <meta name="twitter:image" content="http://yoursite.com/2018/04/16/数据库索引/table.png">
 
 
@@ -307,6 +307,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Database/" itemprop="url" rel="index">
+                    <span itemprop="name">Database</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -317,6 +339,37 @@
 
           
 
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  725
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
           
 
           
@@ -334,7 +387,7 @@
       
 
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本人在做实验的过程中，对于一个有千万级数据量的表，需要对其有查询操作，而其中一个查询列是只有0、1的二值列，传统的检验都建议这种值单一的列不要建索引，但是经过实际测试，在该列建立索引后，查询速度要提升5倍以上，原来处理一个表需要接近7个小时，而建立索引之后只需要1个小时左右，因此，希望通过这边文章，探究数据库索引的内在机制。</p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本人在做实验的过程中，对于一个有千万级数据量的表，需要对其有查询操作，而其中一个查询列是只有0、1的二值列，传统的检验都建议这种值单一的列不要建索引，但是经过实际测试，在该列建立索引后，查询速度要提升5倍以上，原来处理一个表需要接近7个小时，而建立索引之后只需要1个小时左右，因此，希望通过这边文章，探究数据库索引的内在机制。<a id="more"></a></p>
 <h1 id="为什么需要索引"><a href="#为什么需要索引" class="headerlink" title="为什么需要索引"></a>为什么需要索引</h1><p>现代数据库中，数据存储的基本单位是元组，而元组的更高一级是表，其数据结构称为阵列，也类似于编程语言中的二维数组。每一个表的元组共享相同的组成结构，其关系如下图：<br><img src="/2018/04/16/数据库索引/table.png" alt="表"></p>
 <p>如上所示，当对普通数据表进行查询时，会遍历该表，所以，该表的数据量有多大，所遍历的数据量就有多大，两者是线性关系，所以这种查询的时间复杂度为O(n)。</p>
 <h1 id="索引为什么可以加快查询"><a href="#索引为什么可以加快查询" class="headerlink" title="索引为什么可以加快查询"></a>索引为什么可以加快查询</h1><h2 id="二叉搜索树"><a href="#二叉搜索树" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h2><p>对于二叉搜索树我们都很熟悉了，像下面这张图：<br><img src="/2018/04/16/数据库索引/binary_search_tree.png" alt="二叉搜索书"></p>
@@ -420,6 +473,11 @@
           
 
   
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjg0NC8xMzM4MA=="></div>
+    </div>
+
+  
 
 
 
@@ -471,12 +529,21 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
             
 
             
@@ -537,13 +604,29 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Melvin Maonn</span>
 
   
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">4.8k</span>
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_pv">
+  本站访客数:<span id="busuanzi_value_site_pv"></span>
+</span>
 </div>
 
 
@@ -606,6 +689,9 @@
 
 
 
+  
+  
+
 
 
 
@@ -640,6 +726,16 @@
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
   
 
 
@@ -695,6 +791,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
