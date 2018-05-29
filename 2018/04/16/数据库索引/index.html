@@ -87,14 +87,14 @@
 <meta property="og:site_name" content="Melvin’s Blog">
 <meta property="og:description" content="前言本人在做实验的过程中，对于一个有千万级数据量的表，需要对其有查询操作，而其中一个查询列是只有0、1的二值列，传统的检验都建议这种值单一的列不要建索引，但是经过实际测试，在该列建立索引后，查询速度要提升5倍以上，原来处理一个表需要接近7个小时，而建立索引之后只需要1个小时左右，因此，希望通过这边文章，探究数据库索引的内在机制。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2018/04/16/数据库索引/数据库索引/table.png">
-<meta property="og:image" content="http://yoursite.com/2018/04/16/数据库索引/数据库索引/binary_search_tree.png">
-<meta property="og:image" content="http://yoursite.com/2018/04/16/数据库索引/数据库索引/B+_tree.png">
-<meta property="og:updated_time" content="2018-05-26T12:38:15.694Z">
+<meta property="og:image" content="http://yoursite.com/2018/04/16/数据库索引/table.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/16/数据库索引/binary_search_tree.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/16/数据库索引/B+_tree.png">
+<meta property="og:updated_time" content="2018-05-29T14:14:47.555Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库索引">
 <meta name="twitter:description" content="前言本人在做实验的过程中，对于一个有千万级数据量的表，需要对其有查询操作，而其中一个查询列是只有0、1的二值列，传统的检验都建议这种值单一的列不要建索引，但是经过实际测试，在该列建立索引后，查询速度要提升5倍以上，原来处理一个表需要接近7个小时，而建立索引之后只需要1个小时左右，因此，希望通过这边文章，探究数据库索引的内在机制。">
-<meta name="twitter:image" content="http://yoursite.com/2018/04/16/数据库索引/数据库索引/table.png">
+<meta name="twitter:image" content="http://yoursite.com/2018/04/16/数据库索引/table.png">
 
 
 
@@ -422,12 +422,12 @@
 
       
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本人在做实验的过程中，对于一个有千万级数据量的表，需要对其有查询操作，而其中一个查询列是只有0、1的二值列，传统的检验都建议这种值单一的列不要建索引，但是经过实际测试，在该列建立索引后，查询速度要提升5倍以上，原来处理一个表需要接近7个小时，而建立索引之后只需要1个小时左右，因此，希望通过这边文章，探究数据库索引的内在机制。<a id="more"></a></p>
-<h1 id="为什么需要索引"><a href="#为什么需要索引" class="headerlink" title="为什么需要索引"></a>为什么需要索引</h1><p>现代数据库中，数据存储的基本单位是元组，而元组的更高一级是表，其数据结构称为阵列，也类似于编程语言中的二维数组。每一个表的元组共享相同的组成结构，其关系如下图：<br><img src="数据库索引\table.png" alt="表"></p>
+<h1 id="为什么需要索引"><a href="#为什么需要索引" class="headerlink" title="为什么需要索引"></a>为什么需要索引</h1><p>现代数据库中，数据存储的基本单位是元组，而元组的更高一级是表，其数据结构称为阵列，也类似于编程语言中的二维数组。每一个表的元组共享相同的组成结构，其关系如下图：<br><img src="/2018/04/16/数据库索引/table.png" alt="表"></p>
 <p>如上所示，当对普通数据表进行查询时，会遍历该表，所以，该表的数据量有多大，所遍历的数据量就有多大，两者是线性关系，所以这种查询的时间复杂度为O(n)。</p>
-<h1 id="索引为什么可以加快查询"><a href="#索引为什么可以加快查询" class="headerlink" title="索引为什么可以加快查询"></a>索引为什么可以加快查询</h1><h2 id="二叉搜索树"><a href="#二叉搜索树" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h2><p>对于二叉搜索树我们都很熟悉了，像下面这张图：<br><img src="数据库索引\binary_search_tree.png" alt="二叉搜索书"></p>
+<h1 id="索引为什么可以加快查询"><a href="#索引为什么可以加快查询" class="headerlink" title="索引为什么可以加快查询"></a>索引为什么可以加快查询</h1><h2 id="二叉搜索树"><a href="#二叉搜索树" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h2><p>对于二叉搜索树我们都很熟悉了，像下面这张图：<br><img src="/2018/04/16/数据库索引/binary_search_tree.png" alt="二叉搜索树"></p>
 <p>二叉搜索树其实本质就是二分搜索，每次将搜索范围缩小一半，所以整体的时间复杂度为O(logn)。</p>
 <h2 id="B-树"><a href="#B-树" class="headerlink" title="B+树"></a>B+树</h2><p>二叉搜索树在搜索单条数据的时候很有效，但是对于某一个范围内的数据时，就要搜索整棵树了，所以时间复杂度又变成了O(n)。</p>
-<p>因此，需要采用B+树这种数据结构，如下图所示：<br><img src="数据库索引\B+_tree.png" alt="二叉搜索书"><br>B+树的数据都存放在其叶子节点上，各个叶子节点间有序且相连，所以当搜索某一范围的值时，只需要找到其左边界的值，即可沿着其叶子节点逐个向后遍历，直到找到右边界。整个过程只有搜索左边界的时间复杂度是O(logn)，而遍历后续值的时间复杂度是常量级，因此整个时间复杂度是O(logn)。</p>
+<p>因此，需要采用B+树这种数据结构，如下图所示：<br><img src="/2018/04/16/数据库索引/B+_tree.png" alt="二叉搜索书"><br>B+树的数据都存放在其叶子节点上，各个叶子节点间有序且相连，所以当搜索某一范围的值时，只需要找到其左边界的值，即可沿着其叶子节点逐个向后遍历，直到找到右边界。整个过程只有搜索左边界的时间复杂度是O(logn)，而遍历后续值的时间复杂度是常量级，因此整个时间复杂度是O(logn)。</p>
 <h1 id="索引的缺点"><a href="#索引的缺点" class="headerlink" title="索引的缺点"></a>索引的缺点</h1><ol>
 <li>索引本身也是一种数据结构，也需要占用一定的存储空间，尤其是聚簇索引需要占据更大的空间</li>
 <li>索引的建立与维护也需要消耗时间，尤其是对数据进行修改时，索引需要动态的改变，所以索引虽然可以加快查询的速度，但是也会减慢增、删、改的速度</li>
@@ -563,7 +563,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -574,7 +574,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -585,7 +585,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -653,7 +653,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">4.8k</span>
+    <span title="Site words total count">5.9k</span>
   
 </div>
 

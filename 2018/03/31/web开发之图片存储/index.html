@@ -87,14 +87,14 @@
 <meta property="og:site_name" content="Melvin’s Blog">
 <meta property="og:description" content="1.项目背景应实验室导师的需求，我和几位同学需要从零开发一个Android+Java Web的C/S系统。 2.图片存储何处，如何请求我们最初设计数据库时，当碰到图片，为了加快进度，就暂时把图片当做一个BLOB的类型。 不过，当我们完全设计好符合功能需求的数据库后，又不得不重新思考起来，图片的存储与获取问题。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2018/03/31/web开发之图片存储/web开发之图片存储/1522672614773.png">
-<meta property="og:image" content="http://yoursite.com/2018/03/31/web开发之图片存储/web开发之图片存储/1522672667043.png">
-<meta property="og:image" content="http://yoursite.com/2018/03/31/web开发之图片存储/web开发之图片存储/1522672700003.png">
+<meta property="og:image" content="http://yoursite.com/2018/03/31/web开发之图片存储/1522672614773.png">
+<meta property="og:image" content="http://yoursite.com/2018/03/31/web开发之图片存储/1522672667043.png">
+<meta property="og:image" content="http://yoursite.com/2018/03/31/web开发之图片存储/1522672700003.png">
 <meta property="og:updated_time" content="2018-05-26T12:38:08.340Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="web开发之图片存储">
 <meta name="twitter:description" content="1.项目背景应实验室导师的需求，我和几位同学需要从零开发一个Android+Java Web的C/S系统。 2.图片存储何处，如何请求我们最初设计数据库时，当碰到图片，为了加快进度，就暂时把图片当做一个BLOB的类型。 不过，当我们完全设计好符合功能需求的数据库后，又不得不重新思考起来，图片的存储与获取问题。">
-<meta name="twitter:image" content="http://yoursite.com/2018/03/31/web开发之图片存储/web开发之图片存储/1522672614773.png">
+<meta name="twitter:image" content="http://yoursite.com/2018/03/31/web开发之图片存储/1522672614773.png">
 
 
 
@@ -494,7 +494,7 @@
 </tbody>
 </table>
 <p>此时我们的图片作为一个BLOB类型直接存储在数据库中。当客户端希望获取一条新闻，各个系统间的交互如下所示：</p>
-<p><img src="web开发之图片存储\1522672614773.png" alt="52267261477"></p>
+<p><img src="/2018/03/31/web开发之图片存储/1522672614773.png" alt="52267261477"></p>
 <p>可以发现，一条新闻的所有内容都是同步返回给客户端的。也就是说客户端需要在所有数据都接收到后，才能把新闻显示给用户。</p>
 <blockquote>
 <ol>
@@ -572,11 +572,11 @@
 </tbody>
 </table>
 <p>那么客户端请求一条新闻的流程就会变得如下所示：</p>
-<p><img src="web开发之图片存储\1522672667043.png" alt="52267266704"></p>
+<p><img src="/2018/03/31/web开发之图片存储/1522672667043.png" alt="52267266704"></p>
 <p>可以发现，应用服务器只返回了少量文本信息给客户端，客户端收到消息并解析之后，可以先把普通的文本内容呈现给用户（减少了用户的等待时间），然后客户端再异步的向图片服务器请求图片，收到图片数据后再显示给用户。<br>细心地小伙伴也会发现，我们访问一些网页经常会出现图片加载不出来的情况，这也侧面说明图片等大文件的传输是多么的不稳定，所以内容和图片分离的必要性也就显而易见了。</p>
 <h2 id="3-如何存储"><a href="#3-如何存储" class="headerlink" title="3. 如何存储"></a>3. 如何存储</h2><p>我们讨论了如何获取数据，那么如何上传数据呢？</p>
 <p>没错，和我们之前讨论过的图片获取过程类似，就是像下图所示了：</p>
-<p><img src="web开发之图片存储\1522672700003.png" alt="52267270000"></p>
+<p><img src="/2018/03/31/web开发之图片存储/1522672700003.png" alt="52267270000"></p>
 
       
     </div>
@@ -703,7 +703,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -714,7 +714,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -725,7 +725,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -793,7 +793,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">4.8k</span>
+    <span title="Site words total count">5.9k</span>
   
 </div>
 
