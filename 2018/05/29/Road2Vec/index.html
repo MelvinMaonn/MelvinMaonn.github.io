@@ -79,21 +79,21 @@
 
 
 
-<meta name="description" content="背景最近在做关于路网速度预测的研究，很大一部分的文章都是基于深度学习设计模型和实验的，比如用CNN或者LSTM。尤其是很多文章希望用CNN来抓取路网的拓扑结构。 普通的CNN，只能卷积到0、1、2、3之间的拓扑连接关系，但是难以抓取到其相互间权重关系，因此无法考虑到道路之间影响的时空异质性。比如对于0有1、2、3共三条上游道路，但是哪一条道路对于0的影响更大，CNN的表现并不好。 但是有一篇文章提">
+<meta name="description" content="背景最近在做关于路网速度预测的研究，很大一部分的文章都是基于深度学习设计模型和实验的，比如用CNN或者LSTM。尤其是很多文章希望用CNN来抓取路网的拓扑结构。 如图所示，普通的CNN，只能卷积到0、1、2、3之间的拓扑连接关系，但是难以抓取到其相互间权重关系，因此无法考虑到道路之间影响的时空异质性。比如对于0有1、2、3共三条上游道路，但是哪一条道路对于0的影响更大，CNN的表现并不好。 但是有">
 <meta name="keywords" content="word embedding,traffic prediction">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Road2Vec">
 <meta property="og:url" content="http://yoursite.com/2018/05/29/Road2Vec/index.html">
 <meta property="og:site_name" content="Melvin’s Blog">
-<meta property="og:description" content="背景最近在做关于路网速度预测的研究，很大一部分的文章都是基于深度学习设计模型和实验的，比如用CNN或者LSTM。尤其是很多文章希望用CNN来抓取路网的拓扑结构。 普通的CNN，只能卷积到0、1、2、3之间的拓扑连接关系，但是难以抓取到其相互间权重关系，因此无法考虑到道路之间影响的时空异质性。比如对于0有1、2、3共三条上游道路，但是哪一条道路对于0的影响更大，CNN的表现并不好。 但是有一篇文章提">
+<meta property="og:description" content="背景最近在做关于路网速度预测的研究，很大一部分的文章都是基于深度学习设计模型和实验的，比如用CNN或者LSTM。尤其是很多文章希望用CNN来抓取路网的拓扑结构。 如图所示，普通的CNN，只能卷积到0、1、2、3之间的拓扑连接关系，但是难以抓取到其相互间权重关系，因此无法考虑到道路之间影响的时空异质性。比如对于0有1、2、3共三条上游道路，但是哪一条道路对于0的影响更大，CNN的表现并不好。 但是有">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/05/29/Road2Vec/traffic_stream.png">
 <meta property="og:image" content="http://yoursite.com/2018/05/29/Road2Vec/Skip_Gram.png">
 <meta property="og:image" content="http://yoursite.com/2018/05/29/Road2Vec/word2vector_model.png">
-<meta property="og:updated_time" content="2018-05-29T14:27:45.324Z">
+<meta property="og:updated_time" content="2018-05-30T03:55:08.016Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Road2Vec">
-<meta name="twitter:description" content="背景最近在做关于路网速度预测的研究，很大一部分的文章都是基于深度学习设计模型和实验的，比如用CNN或者LSTM。尤其是很多文章希望用CNN来抓取路网的拓扑结构。 普通的CNN，只能卷积到0、1、2、3之间的拓扑连接关系，但是难以抓取到其相互间权重关系，因此无法考虑到道路之间影响的时空异质性。比如对于0有1、2、3共三条上游道路，但是哪一条道路对于0的影响更大，CNN的表现并不好。 但是有一篇文章提">
+<meta name="twitter:description" content="背景最近在做关于路网速度预测的研究，很大一部分的文章都是基于深度学习设计模型和实验的，比如用CNN或者LSTM。尤其是很多文章希望用CNN来抓取路网的拓扑结构。 如图所示，普通的CNN，只能卷积到0、1、2、3之间的拓扑连接关系，但是难以抓取到其相互间权重关系，因此无法考虑到道路之间影响的时空异质性。比如对于0有1、2、3共三条上游道路，但是哪一条道路对于0的影响更大，CNN的表现并不好。 但是有">
 <meta name="twitter:image" content="http://yoursite.com/2018/05/29/Road2Vec/traffic_stream.png">
 
 
@@ -422,8 +422,8 @@
 
       
         <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>最近在做关于路网速度预测的研究，很大一部分的文章都是基于深度学习设计模型和实验的，比如用CNN或者LSTM。尤其是很多文章希望用CNN来抓取路网的拓扑结构。</p>
-<p>普通的CNN，只能卷积到0、1、2、3之间的拓扑连接关系，但是难以抓取到其相互间权重关系，因此无法考虑到道路之间影响的时空异质性。比如对于0有1、2、3共三条上游道路，但是哪一条道路对于0的影响更大，CNN的表现并不好。<br><img src="/2018/05/29/Road2Vec/traffic_stream.png" alt="traffic_stream"></p>
-<p>但是有一篇文章提出了一个较为新颖的方法——road2vector，即借用word2vector的方法，来分析道路间的更深层的关系。其可以根据实际大量的车辆行驶轨迹，来确定1、2、3与0的权重，比如从1进入0的车辆最多，那么1与0的权重比2、3都大，如图所示。</p>
+<p>如图所示，普通的CNN，只能卷积到0、1、2、3之间的拓扑连接关系，但是难以抓取到其相互间权重关系，因此无法考虑到道路之间影响的时空异质性。比如对于0有1、2、3共三条上游道路，但是哪一条道路对于0的影响更大，CNN的表现并不好。<br><img src="/2018/05/29/Road2Vec/traffic_stream.png" alt="traffic_stream"></p>
+<p>但是有一篇文章提出了一个较为新颖的方法——road2vector，即借用word2vector的方法，来分析道路间的更深层的关系。其可以根据实际大量的车辆行驶轨迹，来确定1、2、3与0的权重，比如从1进入0的车辆最多，那么1与0的权重比2、3都大。<a id="more"></a></p>
 <h1 id="word2vector"><a href="#word2vector" class="headerlink" title="word2vector"></a>word2vector</h1><p>什么是word2vector？<br>借用一个常用的例子，“the dog bark at the mailman”，这句话共有6个单词，如果用one-hot编码来表示每个单词当然是可以的，像下面这样：<br>[1,0,0,0,0,0]<br>[0,1,0,0,0,0]<br>[0,0,1,0,0,0]<br>[0,0,0,1,0,0]<br>[0,0,0,0,1,0]<br>[0,0,0,0,0,1]<br>如此，6个单词需要6维的向量来表示，那么一篇文章如果有1万个单词，岂非要用1万维的向量来表示？no，这不是万维网。</p>
 <p>所以，我们需要word embedding，将高维的稀疏向量降维至低维的稠密向量。而word2vector就是word embedding的一种方式，可以实现单词向量化。</p>
 <h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>word2vector有两种常用模型，一种是CBOW，另一种是Skip-Gram。两者的差别在于输入输出的不同，前者是通过上下文来预测一个相关的单词，而后者是通过一个单词来预测其上下文相关的单词。本文重点讨论后一种模型，至于为什么，往下看你就知道了。</p>

@@ -91,7 +91,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/04/06/ST-DBSCAN/double_pointer_cross_list.png">
 <meta property="og:image" content="http://yoursite.com/2018/04/06/ST-DBSCAN/stop_15min_result.png">
 <meta property="og:image" content="http://yoursite.com/2018/04/06/ST-DBSCAN/pesudo_code_st_dbscan.png">
-<meta property="og:updated_time" content="2018-05-27T02:43:26.796Z">
+<meta property="og:updated_time" content="2018-05-30T03:55:21.052Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ST-DBSCAN">
 <meta name="twitter:description" content="项目背景目前人手一部的智能手机都有GPS定位功能，这就使得获取人们的位置信息越来越容易。传统的研究，往往认为位置确定角色，即通过空间位置的变化确定一个人的信息。而实际上，同一地点，时间不同的人，也会有巨大的差别。所以，我们需要从时间和空间两个维度来确定个体的角色，从而确定不同的用户组别并为个体归类。 用户的组别信息，对于社会的各个行业乃至政府的决策都是至关重要的，有了这些信息，服务提供者可以锁定服">
@@ -425,7 +425,7 @@
         <h1 id="项目背景"><a href="#项目背景" class="headerlink" title="项目背景"></a>项目背景</h1><p>目前人手一部的智能手机都有GPS定位功能，这就使得获取人们的位置信息越来越容易。传统的研究，往往认为位置确定角色，即通过空间位置的变化确定一个人的信息。而实际上，同一地点，时间不同的人，也会有巨大的差别。所以，我们需要从<strong>时间</strong>和<strong>空间</strong>两个维度来确定个体的角色，从而确定不同的用户组别并为个体归类。</p>
 <p>用户的组别信息，对于社会的各个行业乃至政府的决策都是至关重要的，有了这些信息，服务提供者可以锁定服务需求者，商品出售者可以直接定位顾客，政府据此进行城市规划、制定决策等。由此可见，对用户的聚类分析是极具研究价值和市场潜力的。</p>
 <p>而多维活动序列元素的组成的不同，如&lt;地点&gt;、&lt;地点、持续时间&gt;、&lt;活动类型、地点、持续时间、开始时间&gt;三种不同的元素序列，对于用户聚类分析的结果也是有不同的影响的。</p>
-<p>因此，本项目主要目的是根据行人的一系列轨迹（在此称为定位点，即Stop点），来找到用户的兴趣点（POI，Point of Interests），为进一步刻画用户做准备。</p>
+<p>因此，本项目主要目的是根据行人的一系列轨迹（在此称为定位点，即Stop点），来找到用户的兴趣点（POI，Point of Interests），为进一步刻画用户做准备。<a id="more"></a></p>
 <h1 id="常见聚类算法"><a href="#常见聚类算法" class="headerlink" title="常见聚类算法"></a>常见聚类算法</h1><p>聚类就是按照某个特定标准(如距离准则)把一个数据集分割成不同的类或簇，使得同一个簇内的数据对象的相似性尽可能大，同时不在同一个簇中的数据对象的差异性也尽可能地大。即聚类后同一类的数据尽可能聚集到一起，不同数据尽量分离。</p>
 <p>目前，有大量的聚类算法。而对于具体应用，聚类算法的选择取决于数据的类型、聚类的目的。如果聚类分析被用作描述或探查的工具，可以对同样的数据尝试多种算法，以发现数据可能揭示的结果。<br>　<br>主要的聚类算法可以划分为如下几类：划分方法、层次方法、基于密度的方法、基于网格的方法以及基于模型的方法。</p>
 <h1 id="双指针遍历"><a href="#双指针遍历" class="headerlink" title="双指针遍历"></a>双指针遍历</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>通常情况下，在某一地点停留一定时间（如15min），即可认为用户在该地点的活动有一定的意义。当定位点（Stop）采集频率为5min一次时，则连续4个Stop点的位置的距离在一定范围内（如50m）即可确定一个活动，可以将该位置抽象为一个POI（Point of Interests），具有经纬度、开始时间、持续时间等属性。</p>

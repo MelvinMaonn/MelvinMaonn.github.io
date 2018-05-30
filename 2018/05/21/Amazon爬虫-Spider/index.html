@@ -92,7 +92,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/05/21/Amazon爬虫-Spider/keysafe_sponsored_position.png">
 <meta property="og:image" content="http://yoursite.com/2018/05/21/Amazon爬虫-Spider/key_safe_natural_position.png">
 <meta property="og:image" content="http://yoursite.com/2018/05/21/Amazon爬虫-Spider/key_safe_all_position.png">
-<meta property="og:updated_time" content="2018-05-29T14:07:13.338Z">
+<meta property="og:updated_time" content="2018-05-30T03:55:34.988Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Amazon爬虫-Spider">
 <meta name="twitter:description" content="背景目前的网络爬虫工具很多，有按等级收费的，比如八爪鱼；在github上也有很多免费开源的爬虫程序。最近我这边来了一个需求，是需要根据给定的关键词，获取其在亚马逊中搜索结果的排序，并且是10个结果页面。 亚马逊的搜索结果包含两部分：一个是广告，另一个是实际产品。所以，要获取这两部分的排序，分别称为广告位和自然位。 在最开始的时候，也尝试过使用八爪鱼。但是，八爪鱼对Amazon的支持并不好。即使中间">
@@ -427,7 +427,7 @@
 <p>亚马逊的搜索结果包含两部分：一个是广告，另一个是实际产品。所以，要获取这两部分的排序，分别称为广告位和自然位。<br><img src="/2018/05/21/Amazon爬虫-Spider/Amazon_key_safe_result.png" alt="Amazon_key_safe_result"></p>
 <p>在最开始的时候，也尝试过使用八爪鱼。但是，八爪鱼对Amazon的支持并不好。即使中间付费定制了规则，使得其能够正常爬取，但是因为八爪鱼的内置浏览器不是类似于谷歌这一类主流浏览器，而Amzon返回的结果跟浏览器有关，所以从八爪鱼上爬取到的结果与主流浏览器的结果并不一样，所以不具有实际意义。</p>
 <p>在github上也找过一些程序，但是关于Amazon的爬虫程序相对较少，有的虽然是关于Amazon的，但是比较重，需要安装各种数据库、框架，安装过程比较复杂，后期维护也比较麻烦。</p>
-<p>最终权衡利弊，只有自己去写一份爬虫程序了。</p>
+<p>最终权衡利弊，只有自己去写一份爬虫程序了。<a id="more"></a></p>
 <h1 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h1><p>首先，虽然最终需要两部分的结果，但是，只要能够把整个结果的整体排序得到，可以单独的再把广告位和自然位区分开。<br>其次，我们只想让爬虫帮我们省去手工查找的时间，所以只要爬虫可以自动化实现爬取就可以了，并不要求爬虫在短时间内爬取结果。<br>最后，因为这个程序最终要给非计算机专业人士使用，所以需要有GUI。</p>
 <h1 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a>技术选型</h1><p>1.首先我们需要读取关键词以及将最后的结果写入文件，最好的文件格式就是Excel格式。所以我们需要能够对Excel读取的框架。xlwt只能新建一个excel写入且不支持新的xlsx；xlutils可以改写excel并且支持xlsx，但是其只能在python2中使用。最终权衡，采用了xlwt。<br>2.因为要求爬取结果符合实际搜索结果，并且对爬取时间并不做要求，所以，采用selenium自动化测试框架，录制一段打开网页的脚本，这样即可以获取到实际的搜索结果，并且也减少了因快速爬虫导致的反爬虫机制的限制，毕竟Amazon的反爬虫还是相当强大的。<br>3.对于爬取结果的解析，采用BeautifulSoup框架。<br>4.对于广告的筛选，采用正则表达式。<br>5.对于GUI，采用Tkinter。<br>6.对于打包，采用pyinstaller。</p>
 <h1 id="关键代码"><a href="#关键代码" class="headerlink" title="关键代码"></a>关键代码</h1><p>1.读取关键词<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">readKeyWord</span><span class="params">(self, filePath)</span>:</span></span><br><span class="line">    <span class="keyword">global</span> keyWords</span><br><span class="line">    excel = xlrd.open_workbook(filePath.get())</span><br><span class="line">    table = excel.sheet_by_name(<span class="string">u'key_word'</span>)</span><br><span class="line">    keyWords = table.col_values(<span class="number">0</span>)</span><br></pre></td></tr></table></figure></p>
