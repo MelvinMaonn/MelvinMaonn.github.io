@@ -296,6 +296,196 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/04/图像旋转/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Melvin Maonn">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Melvin’s Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/04/图像旋转/" itemprop="url">图像旋转</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-04T13:27:02+08:00">
+                2018-07-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/图像处理/" itemprop="url" rel="index">
+                    <span itemprop="name">图像处理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  650
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>图像处理的现有工具很多，比如MATLAB的图像处理工具、OpenCV等等，但是如何身为一个专业的CS从业者，最好能做到知其然并知其所以然，因此今天带领大家实现图像的旋转操作。<br><img src="/2018/07/04/图像旋转/sample.png" alt="sample"></p>
+<h1 id="正向映射"><a href="#正向映射" class="headerlink" title="正向映射"></a>正向映射</h1><p><img src="/2018/07/04/图像旋转/rotate.png" alt="sample"></p>
+<p>上图是图片旋转的过程，可以看到，图片在旋转之后，可能会导致图片变大。<br>求旋转后的图像，第一个可能的思路是我们从原图a中，遍历a的每个像素，计算其在图b中位置。</p>
+<p>很好！</p>
+<p>不对！！！</p>
+<p>我们的像素坐标是整数，那么在计算旋转后的坐标时将有很多结果都是小数，无论采用四舍五入或是只取floor，都会造成原图中不同的像素点经过旋转后所得到的坐标相同，因此将会造成旋转后的图像中出现大量空白。</p>
+<h1 id="逆向映射"><a href="#逆向映射" class="headerlink" title="逆向映射"></a>逆向映射</h1><p><img src="/2018/07/04/图像旋转/rotate_2.png" alt="sample"></p>
+<p>既然正向映射有问题，那我们就逆向映射。如上图，我们从旋转后的图像a入手，遍历其像素，计算其在c中对应的像素。</p>
+<h2 id="确定旋转后图像大小"><a href="#确定旋转后图像大小" class="headerlink" title="确定旋转后图像大小"></a>确定旋转后图像大小</h2><p><img src="/2018/07/04/图像旋转/angel.png" alt="sample"></p>
+<p>原图旋转θ角度后，可以得知其几何关系如上图，因此，旋转后的图像大小即可求出，假设原来的长、宽为m、n，那么旋转后的图像长、宽为mcosθ+nsinθ、mcosθ+nsinθ。</p>
+<h2 id="坐标映射方式"><a href="#坐标映射方式" class="headerlink" title="坐标映射方式"></a>坐标映射方式</h2><p>旋转坐标变换有很多博客都对此推导过了，如这篇，这里只给出公式：</p>
+<center>x1=xcosθ-ysinθ</center><br><center>y1=ycosθ+xsinθ</center>
+
+<h2 id="像素值映射"><a href="#像素值映射" class="headerlink" title="像素值映射"></a>像素值映射</h2><p><img src="/2018/07/04/图像旋转/axis.png" alt="sample"></p>
+<p>像素值的映射过程如上图所示，首先旋转后的图片的行列递增方向分别是向下和向右，因此先将旋转中心平移至坐标轴原点，然后将图片反旋转至相同的角度，最后再将原图片左上角平移至坐标轴原点。</p>
+<h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">% difine the rotate angel, counterclockwise</span></span><br><span class="line">angel = <span class="built_in">pi</span>/<span class="number">6</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">% compute the size after rotate</span></span><br><span class="line">orignImg = imread(<span class="string">'E:/rice.bmp'</span>);</span><br><span class="line">figure,imshow(orignImg)</span><br><span class="line">[orignRow, orignCol] = <span class="built_in">size</span>(orignImg);</span><br><span class="line">newRow = <span class="built_in">round</span>(orignRow * <span class="built_in">cos</span>(angel) + orignCol * <span class="built_in">sin</span>(angel));</span><br><span class="line">newCol = <span class="built_in">round</span>(orignRow * <span class="built_in">sin</span>(angel) + orignCol * <span class="built_in">cos</span>(angel));</span><br><span class="line"></span><br><span class="line"><span class="comment">% define rotate image matrix</span></span><br><span class="line">newImg = <span class="built_in">zeros</span>(newRow, newCol);</span><br><span class="line"></span><br><span class="line"><span class="comment">% compute pixel value one by one </span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:newCol</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">j</span> = <span class="number">1</span>:newRow</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        orignX = <span class="built_in">round</span>((<span class="built_in">i</span>-newCol/<span class="number">2</span>)*<span class="built_in">cos</span>(angel) - (<span class="built_in">j</span>-newRow/<span class="number">2</span>)*<span class="built_in">sin</span>(angel)) + orignCol/<span class="number">2</span>;</span><br><span class="line">        orignY = <span class="built_in">round</span>((<span class="built_in">j</span>-newRow/<span class="number">2</span>)*<span class="built_in">cos</span>(angel) + (<span class="built_in">i</span>-newCol/<span class="number">2</span>)*<span class="built_in">sin</span>(angel)) + orignRow/<span class="number">2</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (orignX &lt; <span class="number">1</span> || orignY &lt; <span class="number">1</span> || orignX &gt; orignCol || orignY &gt; orignRow)</span><br><span class="line">            newImg(<span class="built_in">j</span>,<span class="built_in">i</span>) = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            newImg(<span class="built_in">j</span>,<span class="built_in">i</span>) = orignImg(orignY,orignX);</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        </span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">figure,imshow(newImg);</span><br></pre></td></tr></table></figure>
+<h1 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h1><p>旋转结果如下图：</p>
+<p><img src="/2018/07/04/图像旋转/result.png" alt="sample"> </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/29/Road2Vec/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1229,7 +1419,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1240,7 +1430,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1251,7 +1441,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1303,7 +1493,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">5.9k</span>
+    <span title="Site words total count">6.6k</span>
   
 </div>
 
