@@ -79,22 +79,22 @@
 
 
 
-<meta name="description" content="背景下图是一张米粒图像，如何将米粒都识别出来？本篇博客先讲第一步，将单独的米粒作为一个连通区域，标记出来。  问题分析我们将米粒图像简化为如下图所示的二值图像，那么米粒就是黄色区域，而我们的任务就是通过算法识别出这些区域并且为这些区域编号标记。本博客采用的主要思想是深度优先遍历。  方案访问标记矩阵首先，我们初始化一个和原图像同样的大小的bool矩阵，来标记每个像素是否被访问过，如果已经访问过就跳">
+<meta name="description" content="背景下图是一张米粒图像，如何将米粒都识别出来？本篇博客先讲第一步，将单独的米粒作为一个连通区域，标记出来。">
 <meta name="keywords" content="MATLAB，图像处理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="米粒识别（一）——连通区域标记">
 <meta property="og:url" content="http://yoursite.com/2018/07/05/米粒识别（一）——连通区域标记/index.html">
 <meta property="og:site_name" content="Melvin’s Blog">
-<meta property="og:description" content="背景下图是一张米粒图像，如何将米粒都识别出来？本篇博客先讲第一步，将单独的米粒作为一个连通区域，标记出来。  问题分析我们将米粒图像简化为如下图所示的二值图像，那么米粒就是黄色区域，而我们的任务就是通过算法识别出这些区域并且为这些区域编号标记。本博客采用的主要思想是深度优先遍历。  方案访问标记矩阵首先，我们初始化一个和原图像同样的大小的bool矩阵，来标记每个像素是否被访问过，如果已经访问过就跳">
+<meta property="og:description" content="背景下图是一张米粒图像，如何将米粒都识别出来？本篇博客先讲第一步，将单独的米粒作为一个连通区域，标记出来。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/07/05/米粒识别（一）——连通区域标记/rice.bmp">
 <meta property="og:image" content="http://yoursite.com/2018/07/05/米粒识别（一）——连通区域标记/pixel.png">
 <meta property="og:image" content="http://yoursite.com/2018/07/05/米粒识别（一）——连通区域标记/isLabel.png">
 <meta property="og:image" content="http://yoursite.com/2018/07/05/米粒识别（一）——连通区域标记/label_process.png">
-<meta property="og:updated_time" content="2018-07-05T06:01:22.044Z">
+<meta property="og:updated_time" content="2018-07-05T06:05:46.795Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="米粒识别（一）——连通区域标记">
-<meta name="twitter:description" content="背景下图是一张米粒图像，如何将米粒都识别出来？本篇博客先讲第一步，将单独的米粒作为一个连通区域，标记出来。  问题分析我们将米粒图像简化为如下图所示的二值图像，那么米粒就是黄色区域，而我们的任务就是通过算法识别出这些区域并且为这些区域编号标记。本博客采用的主要思想是深度优先遍历。  方案访问标记矩阵首先，我们初始化一个和原图像同样的大小的bool矩阵，来标记每个像素是否被访问过，如果已经访问过就跳">
+<meta name="twitter:description" content="背景下图是一张米粒图像，如何将米粒都识别出来？本篇博客先讲第一步，将单独的米粒作为一个连通区域，标记出来。">
 <meta name="twitter:image" content="http://yoursite.com/2018/07/05/米粒识别（一）——连通区域标记/rice.bmp">
 
 
@@ -424,6 +424,7 @@
       
         <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>下图是一张米粒图像，如何将米粒都识别出来？本篇博客先讲第一步，将单独的米粒作为一个连通区域，标记出来。</p>
 <p><img src="/2018/07/05/米粒识别（一）——连通区域标记/rice.bmp" alt="sample"></p>
+<a id="more"></a>
 <h1 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h1><p>我们将米粒图像简化为如下图所示的二值图像，那么米粒就是黄色区域，而我们的任务就是通过算法识别出这些区域并且为这些区域编号标记。本博客采用的主要思想是深度优先遍历。</p>
 <p><img src="/2018/07/05/米粒识别（一）——连通区域标记/pixel.png" alt="sample"></p>
 <h1 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h1><h2 id="访问标记矩阵"><a href="#访问标记矩阵" class="headerlink" title="访问标记矩阵"></a>访问标记矩阵</h2><p>首先，我们初始化一个和原图像同样的大小的bool矩阵，来标记每个像素是否被访问过，如果已经访问过就跳过，避免重复处理。</p>

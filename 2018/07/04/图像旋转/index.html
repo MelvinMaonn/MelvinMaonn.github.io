@@ -79,13 +79,13 @@
 
 
 
-<meta name="description" content="背景图像处理的现有工具很多，比如MATLAB的图像处理工具、OpenCV等等，但是如何身为一个专业的CS从业者，最好能做到知其然并知其所以然，因此今天带领大家实现图像的旋转操作。 正向映射 上图是图片旋转的过程，可以看到，图片在旋转之后，可能会导致图片变大。求旋转后的图像，第一个可能的思路是我们从原图a中，遍历a的每个像素，计算其在图b中位置。 很好！ 不对！！！ 我们的像素坐标是整数，那么在计算">
+<meta name="description" content="背景图像处理的现有工具很多，比如MATLAB的图像处理工具、OpenCV等等，但是如何身为一个专业的CS从业者，最好能做到知其然并知其所以然，因此今天带领大家实现图像的旋转操作。">
 <meta name="keywords" content="MATLAB，图像处理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="图像旋转">
 <meta property="og:url" content="http://yoursite.com/2018/07/04/图像旋转/index.html">
 <meta property="og:site_name" content="Melvin’s Blog">
-<meta property="og:description" content="背景图像处理的现有工具很多，比如MATLAB的图像处理工具、OpenCV等等，但是如何身为一个专业的CS从业者，最好能做到知其然并知其所以然，因此今天带领大家实现图像的旋转操作。 正向映射 上图是图片旋转的过程，可以看到，图片在旋转之后，可能会导致图片变大。求旋转后的图像，第一个可能的思路是我们从原图a中，遍历a的每个像素，计算其在图b中位置。 很好！ 不对！！！ 我们的像素坐标是整数，那么在计算">
+<meta property="og:description" content="背景图像处理的现有工具很多，比如MATLAB的图像处理工具、OpenCV等等，但是如何身为一个专业的CS从业者，最好能做到知其然并知其所以然，因此今天带领大家实现图像的旋转操作。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/07/04/图像旋转/sample.png">
 <meta property="og:image" content="http://yoursite.com/2018/07/04/图像旋转/rotate.png">
@@ -93,10 +93,10 @@
 <meta property="og:image" content="http://yoursite.com/2018/07/04/图像旋转/angel.png">
 <meta property="og:image" content="http://yoursite.com/2018/07/04/图像旋转/axis.png">
 <meta property="og:image" content="http://yoursite.com/2018/07/04/图像旋转/result.png">
-<meta property="og:updated_time" content="2018-07-05T06:02:43.440Z">
+<meta property="og:updated_time" content="2018-07-05T06:05:35.456Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="图像旋转">
-<meta name="twitter:description" content="背景图像处理的现有工具很多，比如MATLAB的图像处理工具、OpenCV等等，但是如何身为一个专业的CS从业者，最好能做到知其然并知其所以然，因此今天带领大家实现图像的旋转操作。 正向映射 上图是图片旋转的过程，可以看到，图片在旋转之后，可能会导致图片变大。求旋转后的图像，第一个可能的思路是我们从原图a中，遍历a的每个像素，计算其在图b中位置。 很好！ 不对！！！ 我们的像素坐标是整数，那么在计算">
+<meta name="twitter:description" content="背景图像处理的现有工具很多，比如MATLAB的图像处理工具、OpenCV等等，但是如何身为一个专业的CS从业者，最好能做到知其然并知其所以然，因此今天带领大家实现图像的旋转操作。">
 <meta name="twitter:image" content="http://yoursite.com/2018/07/04/图像旋转/sample.png">
 
 
@@ -425,6 +425,7 @@
 
       
         <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>图像处理的现有工具很多，比如MATLAB的图像处理工具、OpenCV等等，但是如何身为一个专业的CS从业者，最好能做到知其然并知其所以然，因此今天带领大家实现图像的旋转操作。<br><img src="/2018/07/04/图像旋转/sample.png" alt="sample"></p>
+<a id="more"></a>
 <h1 id="正向映射"><a href="#正向映射" class="headerlink" title="正向映射"></a>正向映射</h1><p><img src="/2018/07/04/图像旋转/rotate.png" alt="sample"></p>
 <p>上图是图片旋转的过程，可以看到，图片在旋转之后，可能会导致图片变大。<br>求旋转后的图像，第一个可能的思路是我们从原图a中，遍历a的每个像素，计算其在图b中位置。</p>
 <p>很好！</p>
